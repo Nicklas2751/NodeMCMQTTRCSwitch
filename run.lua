@@ -64,13 +64,13 @@ end
 function startListen()
   log('Start listening...')
 --  MQTTC:publish(config.topic.inp.path,'Test',config.topic.inp.qos,config.topic.inp.retain)
-  MQTTC:subscribe(config.topic.switch433mhz.path.in,function(conn)
-    log('Conntected to:'..config.topic.switch433mhz.path.in)
+  MQTTC:subscribe(config.topic.switch433mhz.path,function(conn)
+    log('Conntected to:'..config.topic.switch433mhz.path)
   end)
 
   MQTTC:on("message", function(conn, topic, data)
     log('debug msg for:'..topic)
-    if data ~= nil and topic == config.topic.switch433mhz.path.in then
+    if data ~= nil and topic == config.topic.switch433mhz.path then
       -- do something, we have received a message
       log("Recived: "+data)
       rc.send(4,data,24,185,1,10) --Sends the data via GPIO pin 4 to the rc switch.
