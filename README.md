@@ -6,6 +6,7 @@ Lua scripts to control 433mhz rc switches via MQTT
 The scripts using the NodeMCU modul "rc" which is eqaul to the rcswitch libary. To turn a 433mhz rc switch on or of the right code have to been send on the right gpio pin. For me its GPIO 4 and a pulse length of 185. Each of my codes has a length of 24. Because I have an "Type B" (See [RCSwitch](https://github.com/sui77/rc-switch/wiki/HowTo_OperateLowCostOutlets)) i had to convert my House and device codes to the deciaml format. For this I copied the functions `sendTriState` and `getCodeWordB` of RCSwitch in a new C++ file and generated the codes for my devices.
 
 This is what my nodeMCU does:
+
 1. Connect to local WLAN
 2. Connect to MQTT Server
 3. Log informations to local console and to "switches/433mhz/log"
