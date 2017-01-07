@@ -1,5 +1,5 @@
-# NodeMCMQTTRCSwitch
-Lua scripts to control 433mhz rc switches via MQTT
+# NodeMCU MQTT RCSwitch Control
+Lua scripts to control 433mhz rc switches via MQTT for homeautomation. 
 
 
 ## How it works
