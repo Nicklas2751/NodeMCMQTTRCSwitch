@@ -72,7 +72,7 @@ function startListen()
     log('debug msg for:'..topic)
     if data ~= nil and topic == config.topic.switch433mhz.path then
       -- do something, we have received a message
-      log("Recived: "+data)
+      log("Recived: "..data)
       rc.send(4,data,24,185,1,10) --Sends the data via GPIO pin 4 to the rc switch.
     end
   end)
