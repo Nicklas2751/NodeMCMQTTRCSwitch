@@ -75,7 +75,7 @@ function startListen()
       log("Recived: "+data)
       rc.send(4,data,24,185,1,10) --Sends the data via GPIO pin 4 to the rc switch.
     end
-  end
+  end)
 end
 
 -------------------------------------------------------------------------------
