@@ -64,7 +64,7 @@ end
 function startListen()
   log('Start listening...')
 --  MQTTC:publish(config.topic.inp.path,'Test',config.topic.inp.qos,config.topic.inp.retain)
-  MQTTC:subscribe(config.topic.switch433mhz.path,function(conn)
+  MQTTC:subscribe(config.topic.switch433mhz.path,config.topic.switch433mhz.qos,function(conn)
     log('Conntected to:'..config.topic.switch433mhz.path)
   end)
 
