@@ -43,7 +43,7 @@ function gotip()
 
   MQTTC = mqtt.Client(config.broker.clientid,60,config.broker.user,config.broker.pass,true)
 
-  MQTTC:lwt(config.topic.sys.path..'log','keepalive timed out',config.topic.sys.qos,config.topic.sys.retain)
+  MQTTC:lwt(config.topic.switch433mhz.path..'log','keepalive timed out',config.topic.switch433mhz.qos,config.topic.switch433mhz.retain)
   MQTTC:on('connect',mqtt_connected)
   MQTTC:on('offline',mqtt_offline)
 
