@@ -21,6 +21,12 @@ config.net                = {}
 config.broker             = {}
 config.topic              = {}
 config.topic.switch433mhz = {}
+config.codes              = {}
+config.codes.device1      = {}
+config.codes.device2      = {}
+config.codes.device3      = {}
+config.codes.device4      = {}
+
 dofile('config.lua')
 
 -------------------------------------------------------------------------------
@@ -61,6 +67,10 @@ function mqtt_offline(client)
   log('MQTT disconnected')
 end
 
+function sendCode(code)
+  rc.send(4,code,24,185,1,2) --Sends the data via GPIO pin 4 to the rc switch.
+end
+
 function startListen()
   log('Start listening...')
 --  MQTTC:publish(config.topic.inp.path,'Test',config.topic.inp.qos,config.topic.inp.retain)
@@ -71,7 +81,44 @@ function startListen()
   MQTTC:on("message", function(conn, topic, data)
     if data ~= nil and topic == config.topic.switch433mhz.path then
       log("Recived: "..data)
-      rc.send(4,data,24,185,1,10) --Sends the data via GPIO pin 4 to the rc switch.
+
+      --Set off
+      if data == "10" then -- Device 1 off
+        sendCode(config.codes.device1.off)
+      elseif data == "20" then -- Device 2 off
+        sendCode(config.codes.device2.off)
+      elseif data == "30" then -- Device 3 off
+        sendCode(config.codes.device3.off)
+      elseif data == "40" then -- Device 4 off
+        sendCode(config.codes.device4.off)
+      
+      --Set on
+      elseif data == "11" then -- Device 1 on
+        sendCode(config.codes.device1.on)
+      elseif data == "21" then -- Device 2 on
+        sendCode(config.codes.device2.on)
+      elseif data == "31" then -- Device 3 on
+        sendCode(config.codes.device3.on)
+      elseif data == "41" then -- Device 4 on
+        sendCode(config.codes.device4.on)
+      
+      --Special commands
+      elseif data == "restart" then -- Restart the nodeMCU
+        node.restart()
+      else
+        log("Got invalid data: "..data)
+        log("-------------------------")
+        log("This are the codes for the devices: ")
+        log("Device 01: 10 OFF | 11 ON")
+        log("Device 02: 20 OFF | 21 ON")
+        log("Device 03: 30 OFF | 31 ON")
+        log("Device 04: 40 OFF | 41 ON")
+        log("-------------------------")
+        log("This are the special commands:")
+        log("restart    | Restarts the nodeMCU")
+        log("-------------------------")
+      end
+      
     end
   end)
 end
